@@ -1,7 +1,27 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
-import CardComponent from "./components/UI/CardComponent";
+import { Col, Container, Row } from "react-bootstrap";
+import AllCars from "./components/cars/AllCars";
 
 const App = () => {
+  const myCars = [
+    {
+      make: 'Kia',
+      type: 'Sportage',
+      model: 2022,
+      color: 'Black',
+      plateNumber: 12345,
+      imageName: 'car.jpg',
+      status: false
+    },
+    {
+      make: 'Kia',
+      type: 'Sportage',
+      model: 2022,
+      color: 'White',
+      plateNumber: 6789,
+      imageName: 'car2.jpg',
+      status: true
+    }
+  ]
   return (
     <Container>
       <Row>
@@ -10,24 +30,7 @@ const App = () => {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <CardComponent
-            src={require(`./assets/images/car.jpg`)}
-            text={"This is a text"}
-            title={"This is a title"}
-          >
-            <Button>This is a button</Button>
-          </CardComponent>
-        </Col>
-        <Col>
-          <CardComponent
-            src={require(`./assets/images/car2.jpg`)}
-            text={"This is a text"}
-            title={"This is a title"}
-          >
-            <Button>This is a button</Button>
-          </CardComponent>
-        </Col>
+        <AllCars allCars={myCars}/>
       </Row>
     </Container>
   );
