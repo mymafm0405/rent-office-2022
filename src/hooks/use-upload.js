@@ -28,11 +28,15 @@ const useUpload = () => {
           .then((url) => {
             applyData(url);
           })
-          .catch((error2) => setError(error2));
+          .catch((error2) => {
+            setError(error2)
+            setLoading(false)
+          });
         setLoading(false);
       })
       .catch((error1) => {
         setError(error1);
+        setLoading(false)
       });
   };
 
