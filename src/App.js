@@ -4,6 +4,7 @@ import AllCars from "./components/cars/AllCars";
 import NewCarForm from "./components/cars/NewCarForm";
 import Navigation from "./components/UI/Navigation";
 import { CarsContext } from "./store/CarsStore";
+import { Route } from "react-router-dom";
 
 const App = () => {
   const carsCtx = useContext(CarsContext);
@@ -26,14 +27,22 @@ const App = () => {
           <Navigation />
         </Col>
       </Row>
-      <Row className="mb-5">
+      <Route path="/" exact>
+        <Row>
+          <AllCars allCars={carsCtx.cars} />
+        </Row>
+      </Route>
+      <Route path="/new-car" exact>
+        <NewCarForm />
+      </Route>
+      {/* <Row className="mb-5">
         <Col>
           <NewCarForm />
         </Col>
-      </Row>
-      <Row>
+      </Row> */}
+      {/* <Row>
         <AllCars allCars={carsCtx.cars} />
-      </Row>
+      </Row> */}
     </Container>
   );
 };
