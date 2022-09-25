@@ -1,7 +1,9 @@
-import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import FormGroupComp from "../UI/FormGroupComp";
+import { storage } from "../../firebase/firebaseConfig";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 const NewCarForm = () => {
   const makeInput = useRef();
@@ -12,23 +14,29 @@ const NewCarForm = () => {
   const imageInput = useRef();
 
   const [fileSelected, setFileSelected] = useState(null);
+  const [imagesList, setImagesList] = useState([]);
+  
+  useEffect(() => {
+    const imagesListRef = ref(storage, "carImages/");
+    listAll(imagesListRef).then((res) => {
+      res.items.forEach((item) =>
+        getDownloadURL(item).then((url) => {
+          setImagesList((prevList) => [...prevList, url]);
+        })
+      );
+    });
+  }, []);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
     console.log("Submitted");
 
-    const formData = new FormData();
-    formData.append("name", "Mahmoud");
-    formData.append("file", fileSelected);
-    // fetch('images', {method: 'POST', headers: {'Content-Type': 'multipart/form-data'}, body: formData})
-    axios
-      .post("https://v2.convertapi.com/upload", formData)
+    const storageRef = ref(storage, `carImages/ + ${fileSelected.name + v4()}`);
+    uploadBytes(storageRef, fileSelected)
       .then((res) => {
         console.log(res);
-        console.log("Uploaded");
       })
       .catch((error) => console.log(error));
-    console.log(imageInput.current.value);
   };
 
   const onChangeHandler = (event) => {
@@ -83,6 +91,9 @@ const NewCarForm = () => {
       <Button className="mt-3" type="submit" variant="success">
         Add car
       </Button>
+      {imagesList.map((imgUrl, index) => (
+        <img key={index} src={imgUrl} alt={index} />
+      ))}
     </Form>
   );
 };
