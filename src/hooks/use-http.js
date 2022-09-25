@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import axios from "axios";
 
 const useHttp = () => {
@@ -23,12 +23,12 @@ const useHttp = () => {
       });
   };
 
-  const getRequest = (requestDetails, applyData) => {
+  const getRequest = useCallback((requestDetails, applyData) => {
     setLoading(true);
     axios.get(requestDetails.url).then((res) => {
-      applyData(res)
+      applyData(res);
     });
-  };
+  }, []);
 
   return {
     loading,

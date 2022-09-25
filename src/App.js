@@ -1,17 +1,29 @@
-import { useContext } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { useContext, useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import AllCars from "./components/cars/AllCars";
 import NewCarForm from "./components/cars/NewCarForm";
+import Navigation from "./components/UI/Navigation";
 import { CarsContext } from "./store/CarsStore";
 
 const App = () => {
   const carsCtx = useContext(CarsContext);
+  const getCars = carsCtx.getAllCars;
+
+  useEffect(() => {
+    getCars();
+  }, [getCars]);
 
   return (
     <Container>
       <Row>
         <Col>
-          <h1>Hello Rent Office 2022</h1>
+          <h1>Rent Office 2022</h1>
+          <img src="images/limousine_logo.png" alt="Limousine logo" />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Navigation />
         </Col>
       </Row>
       <Row className="mb-5">
@@ -20,10 +32,7 @@ const App = () => {
         </Col>
       </Row>
       <Row>
-        <Col><Button onClick={carsCtx.getAllCars}>Get all cars</Button></Col>
-      </Row>
-      <Row>
-        <AllCars allCars={carsCtx.cars}/>
+        <AllCars allCars={carsCtx.cars} />
       </Row>
     </Container>
   );

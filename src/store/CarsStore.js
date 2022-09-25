@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import useHttp from "../hooks/use-http";
 
 export const CarsContext = React.createContext({
@@ -27,13 +27,13 @@ const CarsContextProvider = (props) => {
     setCurrentCars((prevCars) => prevCars.filter((car) => car.id !== id));
   };
 
-  const getAllCarsHandler = () => {
+  const getAllCarsHandler = useCallback(() => {
     const requestDetails = {
       url: "https://rentoffice2022-e097d-default-rtdb.firebaseio.com/cars.json"
     };
 
     getRequest(requestDetails, convertResData)
-  }
+  }, [getRequest])
 
   const convertResData = (res) => {
     const loadedCars = [];
