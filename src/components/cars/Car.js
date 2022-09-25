@@ -4,10 +4,7 @@ import CardComponent from "../UI/CardComponent";
 const Car = (props) => {
   return (
     <Col xs={3}>
-      <CardComponent
-        title={props.car.plateNumber}
-        src={`images/${props.car.imageName}`}
-      >
+      <CardComponent title={props.car.plateNumber} src={props.car.imageUrl}>
         <p>{props.car.make}</p>
         <p>{props.car.type}</p>
         <p>{props.car.model}</p>

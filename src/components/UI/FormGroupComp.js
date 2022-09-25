@@ -18,7 +18,7 @@ const FormGroupComp = ({
         type={type}
         placeholder={placeholder}
         ref={refInput}
-        onChange={onChangeHandler}
+        onChange={type === 'file' ? onChangeHandler : () => {}}
       />
     </Form.Group>
   );
